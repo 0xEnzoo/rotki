@@ -92,6 +92,7 @@ class Etherscan(ExternalServiceWithApiKey, ABC):
                 ExternalService.BASE_ETHERSCAN,
                 ExternalService.GNOSIS_ETHERSCAN,
                 ExternalService.SCROLL_ETHERSCAN,
+                ExternalService.BINANCE_SMART_CHAIN_ETHERSCAN,
             ],
     ) -> None:
         super().__init__(database=database, service_name=service)
@@ -105,6 +106,7 @@ class Etherscan(ExternalServiceWithApiKey, ABC):
             SupportedBlockchain.BASE,
             SupportedBlockchain.GNOSIS,
             SupportedBlockchain.SCROLL,
+            SupportedBlockchain.BINANCE_SMART_CHAIN,
         ) else 'api-'
         self.base_url = base_url
         self.session = requests.session()

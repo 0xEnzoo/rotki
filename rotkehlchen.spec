@@ -65,7 +65,8 @@ polygon_pos_modules = collect_submodules('rotkehlchen.chain.polygon_pos.modules'
 arbitrum_one_modules = collect_submodules('rotkehlchen.chain.arbitrum_one.modules')
 gnosis_modules = collect_submodules('rotkehlchen.chain.gnosis.modules')
 base_modules = collect_submodules('rotkehlchen.chain.base.modules')
-dynamic_modules = ethereum_modules + optimism_modules + polygon_pos_modules + arbitrum_one_modules + gnosis_modules + base_modules
+binance_modules = collect_submodules('rotkehlchen.chain.binance.modules')
+dynamic_modules = ethereum_modules + optimism_modules + polygon_pos_modules + arbitrum_one_modules + gnosis_modules + base_modules + binance_modules
 hiddenimports.extend(dynamic_modules)
 
 a = Entrypoint(

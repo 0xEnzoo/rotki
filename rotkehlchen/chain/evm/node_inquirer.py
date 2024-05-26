@@ -383,7 +383,7 @@ class EvmNodeInquirer(ABC):
             with suppress(ValueError):  # If not existing raises ValuError, so ignore
                 web3.middleware_onion.remove(middleware)
 
-        if self.chain_id in (ChainID.OPTIMISM, ChainID.POLYGON_POS, ChainID.ARBITRUM_ONE, ChainID.BASE):  # noqa: E501
+        if self.chain_id in (ChainID.OPTIMISM, ChainID.POLYGON_POS, ChainID.ARBITRUM_ONE, ChainID.BASE, ChainID.BINANCE_SMART_CHAIN):  # noqa: E501
             # TODO: Is it needed for all non-mainet EVM chains?
             # https://web3py.readthedocs.io/en/stable/middleware.html#why-is-geth-poa-middleware-necessary
             web3.middleware_onion.inject(geth_poa_middleware, layer=0)

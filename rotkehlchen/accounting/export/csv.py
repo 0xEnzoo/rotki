@@ -98,6 +98,7 @@ class CSVExporter(CustomizableDateMixin):
             SupportedBlockchain.GNOSIS: ETHERSCAN_EXPLORER_TX_URL.format(base_url='gnosisscan.io'),
             SupportedBlockchain.SCROLL: ETHERSCAN_EXPLORER_TX_URL.format(base_url='scrollscan.com'),  # noqa: E501
             SupportedBlockchain.ZKSYNC_LITE: 'https://zkscan.io/explorer/transactions/',
+            SupportedBlockchain.BINANCE_SMART_CHAIN: ETHERSCAN_EXPLORER_TX_URL.format(base_url='bscscan.com'),
         }
         with self.database.conn.read_ctx() as cursor:
             self.reload_settings(cursor)

@@ -13,6 +13,7 @@ from rotkehlchen.chain.gnosis.constants import GNOSIS_GENESIS
 from rotkehlchen.chain.optimism.constants import OPTIMISM_GENESIS
 from rotkehlchen.chain.polygon_pos.constants import POLYGON_POS_GENESIS
 from rotkehlchen.chain.scroll.constants import SCROLL_GENESIS
+from rotkehlchen.chain.binance_smart_chain.constants import BINANCE_SMART_CHAIN_GENESIS
 from rotkehlchen.db.constants import EXTRAINTERNALTXPREFIX, HISTORY_MAPPING_STATE_DECODED
 from rotkehlchen.db.filtering import EvmTransactionsFilterQuery, TransactionsNotDecodedFilterQuery
 from rotkehlchen.db.history_events import DBHistoryEvents
@@ -604,6 +605,8 @@ class DBEvmTx:
                 timestamp = GNOSIS_GENESIS
             elif chain_id == ChainID.SCROLL:
                 timestamp = SCROLL_GENESIS
+            elif chain_id == ChainID.BINANCE_SMART_CHAIN:
+                timestamp = BINANCE_SMART_CHAIN_GENESIS
             else:
                 timestamp = POLYGON_POS_GENESIS
             tx = EvmTransaction(

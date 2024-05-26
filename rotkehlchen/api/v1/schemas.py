@@ -37,6 +37,7 @@ from rotkehlchen.chain.gnosis.constants import GNOSIS_ETHERSCAN_NODE_NAME
 from rotkehlchen.chain.optimism.constants import OPTIMISM_ETHERSCAN_NODE_NAME
 from rotkehlchen.chain.polygon_pos.constants import POLYGON_POS_ETHERSCAN_NODE_NAME
 from rotkehlchen.chain.scroll.constants import SCROLL_ETHERSCAN_NODE_NAME
+from rotkehlchen.chain.binance_smart_chain.constants import BINANCE_SMART_CHAIN_ETHERSCAN_NODE_NAME
 from rotkehlchen.chain.substrate.types import SubstrateAddress, SubstratePublicKey
 from rotkehlchen.chain.substrate.utils import (
     get_substrate_address_from_public_key,
@@ -3052,6 +3053,7 @@ class RpcNodeEditSchema(RpcAddNodeSchema):
                 BASE_ETHERSCAN_NODE_NAME,
                 GNOSIS_ETHERSCAN_NODE_NAME,
                 SCROLL_ETHERSCAN_NODE_NAME,
+                BINANCE_SMART_CHAIN_ETHERSCAN_NODE_NAME,
             ):
                 raise ValidationError(
                     message="Can't change the etherscan node name",

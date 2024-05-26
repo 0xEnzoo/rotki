@@ -28,6 +28,7 @@ class BlockchainAccounts:
     dot: tuple[SubstrateAddress, ...] = field(default_factory=tuple)
     avax: tuple[ChecksumEvmAddress, ...] = field(default_factory=tuple)
     zksync_lite: tuple[ChecksumEvmAddress, ...] = field(default_factory=tuple)
+    binance_smart_chain: tuple[ChecksumEvmAddress, ...] = field(default_factory=tuple)
 
     @overload
     def get(self, blockchain: SUPPORTED_EVM_EVMLIKE_CHAINS_TYPE) -> tuple[ChecksumEvmAddress, ...]:

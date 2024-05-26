@@ -120,6 +120,7 @@ if TYPE_CHECKING:
     from rotkehlchen.chain.scroll.manager import ScrollManager
     from rotkehlchen.chain.substrate.manager import SubstrateManager
     from rotkehlchen.chain.zksync_lite.manager import ZksyncLiteManager
+    from rotkehlchen.chain.binance_smart_chain.manager import BinanceSmartChainManager
     from rotkehlchen.db.dbhandler import DBHandler
     from rotkehlchen.db.drivers.gevent import DBCursor
     from rotkehlchen.externalapis.beaconchain.service import BeaconChain
@@ -220,6 +221,7 @@ class ChainsAggregator(CacheableMixIn, LockableQueryMixIn):
             polkadot_manager: 'SubstrateManager',
             avalanche_manager: 'AvalancheManager',
             zksync_lite_manager: 'ZksyncLiteManager',
+            binance_smart_chain_manager: 'BinanceSmartChainManager',
             msg_aggregator: MessagesAggregator,
             database: 'DBHandler',
             greenlet_manager: GreenletManager,
@@ -242,6 +244,7 @@ class ChainsAggregator(CacheableMixIn, LockableQueryMixIn):
         self.polkadot = polkadot_manager
         self.avalanche = avalanche_manager
         self.zksync_lite = zksync_lite_manager
+        self.binance_smart_chain = binance_smart_chain_manager
         self.database = database
         self.msg_aggregator = msg_aggregator
         self.accounts = blockchain_accounts
@@ -266,6 +269,7 @@ class ChainsAggregator(CacheableMixIn, LockableQueryMixIn):
         self.gnosis_lock = Semaphore()
         self.scroll_lock = Semaphore()
         self.zksync_lite_lock = Semaphore()
+        self.binance_smart_chain = Semaphore()
 
         # Per account balances
         self.balances = BlockchainBalances(db=database)
@@ -296,6 +300,7 @@ class ChainsAggregator(CacheableMixIn, LockableQueryMixIn):
             SupportedBlockchain.BASE: self._append_evm_account_modification,  # type:ignore
             SupportedBlockchain.GNOSIS: self._append_evm_account_modification,  # type:ignore
             SupportedBlockchain.SCROLL: self._append_evm_account_modification,  # type:ignore
+            SupportedBlockchain.BINANCE_SMART_CHAIN: self._append_evm_account_modification,  # type:ignore
         }
         self.chain_modify_remove: dict[SupportedBlockchain, Callable[[SupportedBlockchain, BlockchainAddress], None]] = {  # noqa: E501
             SupportedBlockchain.ETHEREUM: self._remove_eth_account_modification,  # type:ignore
@@ -1056,6 +1061,19 @@ class ChainsAggregator(CacheableMixIn, LockableQueryMixIn):
         Same potential exceptions as ethereum
         """
         self.query_evm_chain_balances(chain=SupportedBlockchain.SCROLL)
+
+    @protect_with_lock()
+    @cache_response_timewise()
+    def query_binance_smart_chain_balances(
+            self,  # pylint: disable=unused-argument
+            # Kwargs here is so linters don't complain when the "magic" ignore_cache kwarg is given
+            **kwargs: Any,
+    ) -> None:
+        """
+        Queries all the polygon pos balances and populates the state.
+        Same potential exceptions as ethereum
+        """
+        self.query_evm_chain_balances(chain=SupportedBlockchain.BINANCE_SMART_CHAIN)
 
     @protect_with_lock()
     @cache_response_timewise()

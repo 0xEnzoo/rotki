@@ -87,6 +87,11 @@ export const explorerUrls: AssetExplorerUrls = {
     transaction: 'https://zkscan.io/explorer/transactions/',
     block: 'https://zkscan.io/explorer/blocks/',
   },
+  [Blockchain.BINANCE_SMART_CHAIN]: {
+    address: 'https://bscscan.com/address/',
+    transaction: 'https://bscscan.com/tx/',
+    block: 'https://bscscan.com/block/',
+  },
 };
 
 export function isChains(chain: string): chain is Chains {

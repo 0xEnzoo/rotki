@@ -104,7 +104,7 @@ class Defillama(HistoricalPriceOracleInterface, PenalizablePriceOracleMixin):
                 chain_name = 'polygon'
             elif asset.chain_id == ChainID.ARBITRUM_ONE:
                 chain_name = 'arbitrum'
-            elif asset.chain_id == ChainID.BINANCE:
+            elif asset.chain_id == ChainID.BINANCE_SMART_CHAIN:
                 chain_name = 'bsc'
             elif asset.chain_id == ChainID.AVALANCHE:
                 chain_name = 'avax'

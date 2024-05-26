@@ -612,7 +612,7 @@ def test_add_non_ethereum_token(rotkehlchen_api_server):
     token = EvmToken(identifier)
     assert token.name == 'Some random name'
     assert token.symbol == 'XYZ'
-    assert token.chain_id == ChainID.BINANCE
+    assert token.chain_id == ChainID.BINANCE_SMART_CHAIN
     assert token.protocol == 'my-own-protocol'
 
 

@@ -131,6 +131,7 @@ class ExternalService(SerializableEnumNameMixin):
     SCROLL_ETHERSCAN = auto()
     BLOCKSCOUT = auto()
     MONERIUM = auto()
+    BINANCE_SMART_CHAIN_ETHERSCAN = auto()
 
     def get_chain_for_etherscan(self) -> Optional['ChainID']:
         """If the service is an etherscan service return its chain"""
@@ -148,6 +149,8 @@ class ExternalService(SerializableEnumNameMixin):
             return ChainID.GNOSIS
         elif self == ExternalService.SCROLL_ETHERSCAN:
             return ChainID.SCROLL
+        elif self == ExternalService.BINANCE_SMART_CHAIN_ETHERSCAN:
+            return ChainID.BINANCE_SMART_CHAIN
 
         return None
 
@@ -237,7 +240,7 @@ class ChainID(Enum):
     """
     ETHEREUM = 1
     OPTIMISM = 10
-    BINANCE = 56
+    BINANCE_SMART_CHAIN = 56
     GNOSIS = 100
     POLYGON_POS = 137
     FANTOM = 250
@@ -287,7 +290,7 @@ class ChainID(Enum):
             label = 'zkSync Era'
         elif self == ChainID.POLYGON_ZKEVM:
             label = 'Polygon zkEVM'
-        elif self == ChainID.BINANCE:
+        elif self == ChainID.BINANCE_SMART_CHAIN:
             label = 'Binance Smart Chain'
         elif self == ChainID.ARBITRUM_ONE:
             label = 'Arbitrum One'
@@ -334,6 +337,7 @@ SUPPORTED_CHAIN_IDS = Literal[
     ChainID.BASE,
     ChainID.GNOSIS,
     ChainID.SCROLL,
+    ChainID.BINANCE_SMART_CHAIN,
 ]
 
 
@@ -433,6 +437,7 @@ class SupportedBlockchain(SerializableEnumValueMixin):
     GNOSIS = 'GNOSIS'
     SCROLL = 'SCROLL'
     ZKSYNC_LITE = 'ZKSYNC_LITE'
+    BINANCE_SMART_CHAIN = 'BINANCE_SMART_CHAIN'
 
     def __str__(self) -> str:
         return SUPPORTED_BLOCKCHAIN_NAMES_MAPPING.get(self, super().__str__())
@@ -474,6 +479,8 @@ class SupportedBlockchain(SerializableEnumValueMixin):
             return 'eip155:137/erc20:0x0000000000000000000000000000000000001010'
         if self == SupportedBlockchain.GNOSIS:
             return 'XDAI'
+        if self == SupportedBlockchain.BINANCE_SMART_CHAIN:
+            return 'BNB'
 
         return self.value
 
@@ -539,6 +546,7 @@ SUPPORTED_BLOCKCHAIN_NAMES_MAPPING = {
     SupportedBlockchain.ARBITRUM_ONE: 'Arbitrum One',
     SupportedBlockchain.GNOSIS: 'Gnosis',
     SupportedBlockchain.ZKSYNC_LITE: 'ZKSync Lite',
+    SupportedBlockchain.BINANCE_SMART_CHAIN: 'Binance Smart Chain',
 }
 
 SUPPORTED_BLOCKCHAIN_IMAGE_NAME_MAPPING = {
@@ -556,6 +564,7 @@ SUPPORTED_BLOCKCHAIN_IMAGE_NAME_MAPPING = {
     SupportedBlockchain.GNOSIS: 'gnosis.svg',
     SupportedBlockchain.SCROLL: 'scroll.svg',
     SupportedBlockchain.ZKSYNC_LITE: 'zksync_lite.svg',
+    SupportedBlockchain.BINANCE_SMART_CHAIN: 'binance.svg',
 }
 
 EVM_CHAINS_WITH_TRANSACTIONS_TYPE = Literal[
@@ -566,6 +575,7 @@ EVM_CHAINS_WITH_TRANSACTIONS_TYPE = Literal[
     SupportedBlockchain.BASE,
     SupportedBlockchain.GNOSIS,
     SupportedBlockchain.SCROLL,
+    SupportedBlockchain.BINANCE_SMART_CHAIN,
 ]
 
 EVM_CHAINS_WITH_TRANSACTIONS: tuple[EVM_CHAINS_WITH_TRANSACTIONS_TYPE, ...] = typing.get_args(EVM_CHAINS_WITH_TRANSACTIONS_TYPE)  # noqa: E501
@@ -578,6 +588,7 @@ EVM_CHAIN_IDS_WITH_TRANSACTIONS_TYPE = Literal[
     ChainID.BASE,
     ChainID.GNOSIS,
     ChainID.SCROLL,
+    ChainID.BINANCE_SMART_CHAIN,
 ]
 
 EVM_CHAIN_IDS_WITH_TRANSACTIONS: tuple[EVM_CHAIN_IDS_WITH_TRANSACTIONS_TYPE, ...] = typing.get_args(EVM_CHAIN_IDS_WITH_TRANSACTIONS_TYPE)  # noqa: E501
@@ -589,6 +600,7 @@ CHAIN_IDS_WITH_BALANCE_PROTOCOLS = Literal[
     ChainID.BASE,
     ChainID.POLYGON_POS,
     ChainID.SCROLL,
+    ChainID.BINANCE_SMART_CHAIN,
 ]
 
 SUPPORTED_EVM_CHAINS_TYPE = Literal[
@@ -600,6 +612,7 @@ SUPPORTED_EVM_CHAINS_TYPE = Literal[
     SupportedBlockchain.BASE,
     SupportedBlockchain.GNOSIS,
     SupportedBlockchain.SCROLL,
+    SupportedBlockchain.BINANCE_SMART_CHAIN,
 ]
 SUPPORTED_EVM_CHAINS: tuple[SUPPORTED_EVM_CHAINS_TYPE, ...] = typing.get_args(SUPPORTED_EVM_CHAINS_TYPE)  # noqa: E501
 
@@ -622,6 +635,7 @@ SUPPORTED_NON_BITCOIN_CHAINS = Literal[
     SupportedBlockchain.GNOSIS,
     SupportedBlockchain.SCROLL,
     SupportedBlockchain.ZKSYNC_LITE,
+    SupportedBlockchain.BINANCE_SMART_CHAIN,
 ]
 
 SUPPORTED_BITCOIN_CHAINS = Literal[
@@ -643,6 +657,7 @@ SUPPORTED_BLOCKCHAIN_TO_CHAINID = {
     SupportedBlockchain.BASE: ChainID.BASE,
     SupportedBlockchain.GNOSIS: ChainID.GNOSIS,
     SupportedBlockchain.SCROLL: ChainID.SCROLL,
+    SupportedBlockchain.BINANCE_SMART_CHAIN: ChainID.BINANCE_SMART_CHAIN,
 }
 CHAINID_TO_SUPPORTED_BLOCKCHAIN = {
     value: key
@@ -662,6 +677,7 @@ CHAINS_WITH_CHAIN_MANAGER = Literal[
     SupportedBlockchain.GNOSIS,
     SupportedBlockchain.SCROLL,
     SupportedBlockchain.ZKSYNC_LITE,
+    SupportedBlockchain.BINANCE_SMART_CHAIN,
 ]
 
 
@@ -746,6 +762,7 @@ class Location(DBCharEnumMixIn):
     BYBIT = 45
     SCROLL = 46  # on-chain Scroll events
     ZKSYNC_LITE = 47
+    BINANCE_SMART_CHAIN = 48  # on-chain Binance Smart Chain events
 
     @staticmethod
     def from_chain_id(chain_id: EVM_CHAIN_IDS_WITH_TRANSACTIONS_TYPE) -> 'EVM_LOCATIONS_TYPE':
@@ -766,6 +783,9 @@ class Location(DBCharEnumMixIn):
 
         if chain_id == ChainID.SCROLL:
             return Location.SCROLL
+        
+        if chain_id == ChainID.BINANCE_SMART_CHAIN:
+            return Location.BINANCE_SMART_CHAIN
 
         # else
         return Location.POLYGON_POS
@@ -788,6 +808,8 @@ class Location(DBCharEnumMixIn):
             return ChainID.GNOSIS.value
         if self == Location.SCROLL:
             return ChainID.SCROLL.value
+        if self == Location.BINANCE_SMART_CHAIN:
+            return ChainID.BINANCE_SMART_CHAIN.value
         assert self == Location.POLYGON_POS, 'should have only been polygon pos here'
         return ChainID.POLYGON_POS.value
 
@@ -811,11 +833,13 @@ class Location(DBCharEnumMixIn):
                 return Location.SCROLL
             case SupportedBlockchain.ZKSYNC_LITE:
                 return Location.ZKSYNC_LITE
+            case SupportedBlockchain.BINANCE_SMART_CHAIN:
+                return Location.BINANCE_SMART_CHAIN
             case _:  # should never happen
                 raise AssertionError(f'Got in Location.from_chain for {chain}')
 
 
-EVM_LOCATIONS_TYPE = Literal[Location.ETHEREUM, Location.OPTIMISM, Location.POLYGON_POS, Location.ARBITRUM_ONE, Location.BASE, Location.GNOSIS, Location.SCROLL]  # noqa: E501
+EVM_LOCATIONS_TYPE = Literal[Location.ETHEREUM, Location.OPTIMISM, Location.POLYGON_POS, Location.ARBITRUM_ONE, Location.BASE, Location.GNOSIS, Location.SCROLL, Location.BINANCE_SMART_CHAIN]  # noqa: E501
 EVM_LOCATIONS: tuple[EVM_LOCATIONS_TYPE, ...] = typing.get_args(EVM_LOCATIONS_TYPE)
 EVMLIKE_LOCATIONS_TYPE = Literal[Location.ZKSYNC_LITE]
 EVMLIKE_LOCATIONS: tuple[EVMLIKE_LOCATIONS_TYPE, ...] = typing.get_args(EVMLIKE_LOCATIONS_TYPE)

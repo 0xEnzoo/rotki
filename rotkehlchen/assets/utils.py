@@ -16,6 +16,7 @@ from rotkehlchen.constants.assets import (
     A_WETH_OPT,
     A_WETH_POLYGON,
     A_WXDAI,
+    A_WETH_BSC,
 )
 from rotkehlchen.constants.resolver import evm_address_to_identifier
 from rotkehlchen.errors.asset import UnknownAsset
@@ -436,4 +437,5 @@ CHAIN_TO_WRAPPED_TOKEN: Final = {
     SupportedBlockchain.BASE: A_WETH_BASE,
     SupportedBlockchain.GNOSIS: A_WXDAI,
     SupportedBlockchain.POLYGON_POS: A_WETH_POLYGON,
+    SupportedBlockchain.BINANCE_SMART_CHAIN: A_WETH_BSC,
 }

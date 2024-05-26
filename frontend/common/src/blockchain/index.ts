@@ -13,6 +13,7 @@ export enum Blockchain {
   GNOSIS = 'gnosis',
   SCROLL = 'scroll',
   ZKSYNC_LITE = 'zksync_lite',
+  BINANCE_SMART_CHAIN = 'binance_smart_chain',
 }
 
 export type BlockchainSelection = Blockchain | 'ALL';

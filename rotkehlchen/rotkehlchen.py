@@ -41,6 +41,8 @@ from rotkehlchen.chain.polygon_pos.manager import PolygonPOSManager
 from rotkehlchen.chain.polygon_pos.node_inquirer import PolygonPOSInquirer
 from rotkehlchen.chain.scroll.manager import ScrollManager
 from rotkehlchen.chain.scroll.node_inquirer import ScrollInquirer
+from rotkehlchen.chain.binance_smart_chain.manager import BinanceSmartChainManager
+from rotkehlchen.chain.binance_smart_chain.node_inquirer import BinanceSmartChainInquirer
 from rotkehlchen.chain.substrate.manager import SubstrateManager
 from rotkehlchen.chain.substrate.utils import (
     KUSAMA_NODES_TO_CONNECT_AT_START,
@@ -398,6 +400,11 @@ class Rotkehlchen:
             database=self.data.db,
         )
         scroll_manager = ScrollManager(scroll_inquirer)
+        binance_smart_chain_inquirer = BinanceSmartChainInquirer(
+            greenlet_manager=self.greenlet_manager,
+            database=self.data.db,
+        )
+        binance_smart_chain_manager = BinanceSmartChainManager(binance_smart_chain_inquirer)
         kusama_manager = SubstrateManager(
             chain=SupportedBlockchain.KUSAMA,
             msg_aggregator=self.msg_aggregator,
@@ -448,6 +455,7 @@ class Rotkehlchen:
             polkadot_manager=polkadot_manager,
             avalanche_manager=avalanche_manager,
             zksync_lite_manager=zksync_lite_manager,
+            binance_smart_chain_manager=binance_smart_chain_manager,
             msg_aggregator=self.msg_aggregator,
             database=self.data.db,
             greenlet_manager=self.greenlet_manager,
